@@ -7,29 +7,25 @@
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body, #graphiql { height: 100vh; }
     </style>
-    <link
-      rel="stylesheet"
-      href="https://esm.sh/graphiql@3.9.0/graphiql.min.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/graphiql@3.9.0/graphiql.min.css" />
   </head>
   <body>
     <div id="graphiql"></div>
 
-    <script type="module">
-      import React from 'https://esm.sh/react@18.3.1';
-      import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client';
-      import { GraphiQL } from 'https://esm.sh/graphiql@3.9.0?deps=react@18.3.1,react-dom@18.3.1';
-      import { createGraphiQLFetcher } from 'https://esm.sh/@graphiql/toolkit@0.11.3';
+    <!-- Load everything via UMD from unpkg — no module resolution issues -->
+    <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/graphiql@3.9.0/graphiql.min.js"></script>
 
-      // ✏️ Replace with your GraphQL endpoint
-      const fetcher = createGraphiQLFetcher({
+    <script>
+      const fetcher = GraphiQL.createFetcher({
         url: 'https://your-api.com/graphql',
       });
 
-      createRoot(document.getElementById('graphiql')).render(
+      ReactDOM.createRoot(document.getElementById('graphiql')).render(
         React.createElement(GraphiQL, {
           fetcher,
-          defaultQuery: `# Welcome! Try a query below.\nquery {\n  # your fields here\n}`,
+          defaultQuery: '# Welcome! Try a query below.\nquery {\n  # your fields here\n}',
         })
       );
     </script>
